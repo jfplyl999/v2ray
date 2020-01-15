@@ -812,7 +812,7 @@ menu(){
     echo -e "—————————————— 安装向导 ——————————————"""
     echo -e "${Green}0.${Font}  升级 脚本"
     echo -e "${Green}1.${Font}  安装 V2Ray (Nginx+ws+tls)"
-    echo -e "${Green}2.${Font}  安装 V2Ray (http/2)"
+    echo -e "${Green}2.${Font}  安装 V2Ray (http/2+tls)"
     echo -e "${Green}3.${Font}  升级 V2Ray core"
     echo -e "—————————————— 配置变更 ——————————————"
     echo -e "${Green}4.${Font}  变更 UUID"
@@ -827,9 +827,9 @@ menu(){
     echo -e "${Green}11.${Font} 安装 4合1 bbr 锐速安装脚本"
     echo -e "${Green}12.${Font} 证书 有效期更新"
     echo -e "${Green}13.${Font} 卸载 V2Ray"
-    echo -e "${Green}14.${Font} 退出 \n"
-	echo -e "${Green}15.${Font} Docker国外安装"
-	echo -e "${Green}16.${Font} Docker国内安装"
+    echo -e "${Green}14.${Font} 退出 "
+    echo -e "${Green}15.${Font} Docker国外安装"
+    echo -e "${Green}16.${Font} Docker国内安装"
 
     read -p "请输入数字：" menu_num
     case $menu_num in
