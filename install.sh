@@ -829,7 +829,7 @@ menu(){
     echo -e "${Green}13.${Font} 卸载 V2Ray"
     echo -e "${Green}14.${Font} 退出 "
     echo -e "${Green}15.${Font} Docker国外安装"
-    echo -e "${Green}16.${Font} Docker国内安装"
+    echo -e "${Green}16.${Font} Docker国内安装 \n"
 
     read -p "请输入数字：" menu_num
     case $menu_num in
