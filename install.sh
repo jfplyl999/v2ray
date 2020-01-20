@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#===================================================
+#==================================================
 #	System Request:Debian 9+/Ubuntu 18.04+/Centos 7+
 #	Author:	wulabing
 #	Dscription: V2ray ws+tls onekey Management
