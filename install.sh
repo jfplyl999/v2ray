@@ -690,7 +690,9 @@ ssrmu_sh(){
     bash <(curl -L -s -k "https://raw.githubusercontent.com/jfplyl999/v2ray/master/ssrmu.sh")
 }
 yuan_sh(){
-    bash <(curl -L -s -k "git.io/superupdate.sh")
+    wget git.io/superupdate.sh && bash superupdate.sh aliyun 
+	apt-get update
+    apt-get upgrade	
 }
 uninstall_all(){
     stop_process_systemd
@@ -841,7 +843,7 @@ menu(){
 	echo -e "${Green}16.${Font} Docker国内安装"
 	echo -e "${Green}18.${Font} superbench测速"
 	echo -e "${Green}19.${Font} 端口转发"
-	echo -e "${Green}20.${Font} debian更换为阿里源"
+	echo -e "${Green}20.${Font} debian更换为阿里源并更新"
     echo -e "${Green}14.${Font} 退出 \n"
 	
 
@@ -925,7 +927,7 @@ menu(){
         19)
           brook_pf_sh 
           ;;
-        20)
+        19)
           yuan_sh 
           ;;		  
         *)
