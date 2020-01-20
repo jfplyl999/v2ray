@@ -1872,10 +1872,7 @@ case "$num" in
 	Update_Shell
 	;;
 	*)
-        clear
 	echo -e "${Error}:请输入正确数字 [0-11]"
-	sleep 5s
-	start_menu
 	;;
 esac
 fi
