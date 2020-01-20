@@ -1878,3 +1878,4 @@ case "$num" in
 	start_menu
 	;;
 esac
+fi
