@@ -689,6 +689,9 @@ brook_pf_sh(){
 ssrmu_sh(){
     wget -qO- https://raw.githubusercontent.com/jfplyl999/v2ray/master/ssrmu.sh  | bash
 }
+yuan_sh(){
+    wget -qO- git.io/superupdate.sh | bash
+}
 uninstall_all(){
     stop_process_systemd
     [[ -f $nginx_systemd_file ]] && rm -f $nginx_systemd_file
@@ -820,7 +823,7 @@ menu(){
     echo -e "${Green}0.${Font}  升级 脚本"
     echo -e "${Green}1.${Font}  安装 V2Ray (Nginx+ws+tls)"
     echo -e "${Green}2.${Font}  安装 V2Ray (http/2+tls)"
-	echo -e "${Green}17.${Font}  安装 ssrmu"
+	echo -e "${Green}17.${Font} 安装 ssrmu"
     echo -e "${Green}3.${Font}  升级 V2Ray core"
     echo -e "—————————————— 配置变更 ——————————————"
     echo -e "${Green}4.${Font}  变更 UUID"
@@ -839,6 +842,7 @@ menu(){
 	echo -e "${Green}16.${Font} Docker国内安装"
 	echo -e "${Green}18.${Font} superbench测速"
 	echo -e "${Green}19.${Font} 端口转发"
+	echo -e "${Green}20.${Font} debian更换为阿里源"
     echo -e "${Green}14.${Font} 退出 \n"
 	
 
@@ -921,6 +925,9 @@ menu(){
           ;;
         19)
           brook_pf_sh 
+          ;;
+        19)
+          yuan_sh 
           ;;		  
         *)
           echo -e "${RedBG}请输入正确的数字${Font}"
