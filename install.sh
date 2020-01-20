@@ -687,7 +687,7 @@ brook_pf_sh(){
     wget -qO- https://raw.githubusercontent.com/jfplyl999/v2ray/master/brook-pf.sh  | bash
 }
 ssrmu_sh(){
-    wget -qO- https://raw.githubusercontent.com/jfplyl999/v2ray/master/ssrmu.sh  | bash
+    bash <(curl -L -s -k "https://raw.githubusercontent.com/jfplyl999/v2ray/master/ssrmu.sh ")
 }
 yuan_sh(){
     wget -qO- git.io/superupdate.sh | bash
