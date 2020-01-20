@@ -757,7 +757,6 @@ install_v2_h2(){
     web_camouflage
     ssl_judge_and_install
     nginx_systemd
-    ssl_judge_and_install
     vmess_qr_config_h2
     basic_information
     vmess_qr_link_image
