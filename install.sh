@@ -925,7 +925,7 @@ menu(){
         19)
           brook_pf_sh 
           ;;
-        19)
+        20)
           yuan_sh 
           ;;		  
         *)
