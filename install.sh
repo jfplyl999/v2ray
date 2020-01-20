@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#==================================================
+#====================================================
 #	System Request:Debian 9+/Ubuntu 18.04+/Centos 7+
 #	Author:	wulabing
 #	Dscription: V2ray ws+tls onekey Management
@@ -298,14 +298,12 @@ docker_exist_check(){
     fi
 }
 docker_install_1(){
-    curl -sSL https://get.docker.com | sh
-	judge "docker 国外安装"
+    curl -sSL https://get.docker.com | sh "docker 国外安装"
 	service docker start "${OK} ${GreenBG} docker启动完成 ${Font}"
 	systemctl enable docker "${OK} ${GreenBG} docker设置自启 ${Font}"
 }
 docker_install_2(){
-    curl -sSL https://get.daocloud.io/docker | sh
-	judge "docker 国内安装"
+    curl -sSL https://get.daocloud.io/docker | sh "docker 国内安装"
 	service docker start "${OK} ${GreenBG} docker启动完成 ${Font}"
 	systemctl enable docker "${OK} ${GreenBG} docker设置自启 ${Font}"
 }
@@ -682,6 +680,15 @@ ssl_update_manuel(){
 bbr_boost_sh(){
     bash <(curl -L -s -k "https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh")
 }
+superbench_sh(){
+    wget -qO- https://raw.githubusercontent.com/jfplyl999/v2ray/master/superbench.sh   | bash
+}
+brook_pf_sh(){
+    wget -qO- https://raw.githubusercontent.com/jfplyl999/v2ray/master/brook-pf.sh  | bash
+}
+ssrmu_sh(){
+    wget -qO- https://raw.githubusercontent.com/jfplyl999/v2ray/master/ssrmu.sh  | bash
+}
 uninstall_all(){
     stop_process_systemd
     [[ -f $nginx_systemd_file ]] && rm -f $nginx_systemd_file
@@ -813,6 +820,7 @@ menu(){
     echo -e "${Green}0.${Font}  升级 脚本"
     echo -e "${Green}1.${Font}  安装 V2Ray (Nginx+ws+tls)"
     echo -e "${Green}2.${Font}  安装 V2Ray (http/2+tls)"
+	echo -e "${Green}17.${Font}  安装 ssrmu"
     echo -e "${Green}3.${Font}  升级 V2Ray core"
     echo -e "—————————————— 配置变更 ——————————————"
     echo -e "${Green}4.${Font}  变更 UUID"
@@ -827,9 +835,12 @@ menu(){
     echo -e "${Green}11.${Font} 安装 4合1 bbr 锐速安装脚本"
     echo -e "${Green}12.${Font} 证书 有效期更新"
     echo -e "${Green}13.${Font} 卸载 V2Ray"
-    echo -e "${Green}14.${Font} 退出 "
-    echo -e "${Green}15.${Font} Docker国外安装"
-    echo -e "${Green}16.${Font} Docker国内安装 \n"
+	echo -e "${Green}15.${Font} Docker国外安装"
+	echo -e "${Green}16.${Font} Docker国内安装"
+	echo -e "${Green}18.${Font} superbench测速"
+	echo -e "${Green}19.${Font} 端口转发"
+    echo -e "${Green}14.${Font} 退出 \n"
+	
 
     read -p "请输入数字：" menu_num
     case $menu_num in
@@ -900,8 +911,17 @@ menu(){
           docker_install_1
           ;;
 		16)
-          docker_install_2
+          docker_install_2 
           ;;
+		17)
+          ssrmu_sh 
+          ;;
+		18)
+          superbench_sh 
+          ;;
+        19)
+          brook_pf_sh 
+          ;;		  
         *)
           echo -e "${RedBG}请输入正确的数字${Font}"
           ;;
