@@ -767,6 +767,21 @@ install_v2_h2(){
     enable_process_systemd
 
 }
+install_nginx_1(){
+    is_root
+    check_system
+    chrony_install
+    dependency_install
+    basic_optimization
+	domain_check
+    port_exist_check 80
+    port_exist_check 443
+	nginx_exist_check
+	web_camouflage
+    ssl_judge_and_install
+    web_camouflage
+
+}
 update_sh(){
     ol_version=$(curl -L -s https://raw.githubusercontent.com/wulabing/V2Ray_ws-tls_bash_onekey/master/install.sh | grep "shell_version=" | head -1 |awk -F '=|"' '{print $3}')
     echo "$ol_version" > $version_cmp
@@ -932,7 +947,7 @@ menu(){
           yuan_sh 
           ;;
         21)
-          nginx_exist_check 
+          install_nginx_1 
           ;;		  
         *)
           echo -e "${RedBG}请输入正确的数字${Font}"
