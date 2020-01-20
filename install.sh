@@ -773,13 +773,18 @@ install_nginx_1(){
     chrony_install
     dependency_install
     basic_optimization
-	domain_check
+    domain_check
+    port_alterid_set
     port_exist_check 80
-    port_exist_check 443
+    port_exist_check ${port}
 	nginx_exist_check
-	web_camouflage
-    ssl_judge_and_install
+    nginx_conf_add
     web_camouflage
+    ssl_judge_and_install
+    nginx_systemd
+    basic_information
+    start_process_systemd
+    enable_process_systemd
 
 }
 update_sh(){
