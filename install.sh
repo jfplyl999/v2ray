@@ -781,7 +781,6 @@ install_nginx_1(){
     nginx_conf_add
     web_camouflage
     ssl_judge_and_install
-    nginx_systemd
     basic_information
     start_process_systemd
     enable_process_systemd
