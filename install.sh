@@ -823,8 +823,9 @@ menu(){
     echo -e "—————————————— 安装向导 ——————————————"""
     echo -e "${Green}0.${Font}  升级 脚本"
     echo -e "${Green}1.${Font}  安装 V2Ray (Nginx+ws+tls)"
-    echo -e "${Green}2.${Font}  安装 V2Ray (http/2+tls)"
+    echo -e "${Green}2.${Font}  安装 V2Ray (Nginx+http/2+tls)"
 	echo -e "${Green}17.${Font} 安装 ssrmu"
+	echo -e "${Green}21.${Font} 安装 Nginx"
     echo -e "${Green}3.${Font}  升级 V2Ray core"
     echo -e "—————————————— 配置变更 ——————————————"
     echo -e "${Green}4.${Font}  变更 UUID"
@@ -927,8 +928,11 @@ menu(){
         19)
           brook_pf_sh 
           ;;
-	  20)
+        20)
           yuan_sh 
+          ;;
+        21)
+          nginx_exist_check 
           ;;		  
         *)
           echo -e "${RedBG}请输入正确的数字${Font}"
