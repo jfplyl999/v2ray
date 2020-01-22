@@ -253,6 +253,13 @@ modify_nginx_other(){
     sed -i "/return/c \\\treturn 301 https://${domain}\$request_uri;" ${nginx_conf}
     #sed -i "27i \\\tproxy_intercept_errors on;"  ${nginx_dir}/conf/nginx.conf
 }
+modify_nginx_other_1(){
+    sed -i "/server_name/c \\\tserver_name ${domain};" ${nginx_conf}
+    sed -i "/location/c \\\tlocation \/${camouflage}\/" ${nginx_conf}
+    sed -i "/proxy_pass/c \\\tproxy_pass http://127.0.0.1:443;" ${nginx_conf}
+    sed -i "/return/c \\\treturn 301 https://${domain}\$request_uri;" ${nginx_conf}
+    #sed -i "27i \\\tproxy_intercept_errors on;"  ${nginx_dir}/conf/nginx.conf
+}
 web_camouflage(){
     ##请注意 这里和LNMP脚本的默认路径冲突，千万不要在安装了LNMP的环境下使用本脚本，否则后果自负
     rm -rf /home/wwwroot && mkdir -p /home/wwwroot && cd /home/wwwroot
@@ -298,12 +305,12 @@ docker_exist_check(){
     fi
 }
 docker_install_1(){
-    curl -sSL https://get.docker.com | sh "docker 国外安装"
-	service docker start "${OK} ${GreenBG} docker启动完成 ${Font}"
+    curl -sSL https://get.docker.com | sh
+    service docker start "${OK} ${GreenBG} docker启动完成 ${Font}"
 	systemctl enable docker "${OK} ${GreenBG} docker设置自启 ${Font}"
 }
 docker_install_2(){
-    curl -sSL https://get.daocloud.io/docker | sh "docker 国内安装"
+    curl -sSL https://get.daocloud.io/docker | sh
 	service docker start "${OK} ${GreenBG} docker启动完成 ${Font}"
 	systemctl enable docker "${OK} ${GreenBG} docker设置自启 ${Font}"
 }
@@ -491,6 +498,40 @@ modify_nginx_other
 judge "Nginx 配置修改"
 
 }
+nginx_conf_add_2(){
+    touch ${nginx_conf_dir}/v2ray.conf
+    cat>${nginx_conf_dir}/v2ray.conf<<EOF
+    server {
+        listen 443 ssl http2;
+        ssl_certificate       /data/v2ray.crt;
+        ssl_certificate_key   /data/v2ray.key;
+        ssl_protocols         TLSv1.2 TLSv1.3;
+        ssl_ciphers           TLS13-AES-256-GCM-SHA384:TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES-128-GCM-SHA256:TLS13-AES-128-CCM-8-SHA256:TLS13-AES-128-CCM-SHA256:EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
+        server_name           serveraddr.com;
+        index index.html index.htm;
+        root  /home/wwwroot/3DCEList;
+        error_page 400 = /400.html;
+        location /ray/
+        {
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:443;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host \$http_host;
+        }
+}
+    server {
+        listen 80;
+        server_name serveraddr.com;
+        return 301 https://use.shadowsocksr.win\$request_uri;
+    }
+EOF
+
+modify_nginx_other_1
+judge "Nginx 配置修改"
+
+}
 
 start_process_systemd(){
     systemctl daemon-reload
@@ -499,7 +540,7 @@ start_process_systemd(){
         systemctl restart nginx
         judge "Nginx 启动"
     fi
-    systemctl restart v2ray
+    systemctl restart v2ray && systemctl restart nginx
     judge "V2ray 启动"
 }
 
@@ -513,7 +554,11 @@ enable_process_systemd(){
     fi
 
 }
-
+start_enable_nginx(){
+    systemctl restart nginx
+    systemctl enable nginx
+        judge "设置 Nginx v2ary 开机自启"
+}
 stop_process_systemd(){
     if [[ "$shell_mode" != "h2" ]]
     then
@@ -692,8 +737,9 @@ ssrmu_sh(){
 yuan_sh(){
     wget git.io/superupdate.sh && bash superupdate.sh aliyun 
 	apt-get update
-    apt-get upgrade	
-}
+    apt-get upgrade
+	apt-get install curl -y
+	}
 uninstall_all(){
     stop_process_systemd
     [[ -f $nginx_systemd_file ]] && rm -f $nginx_systemd_file
@@ -753,12 +799,8 @@ install_v2_h2(){
     v2ray_install
     port_exist_check 80
     port_exist_check ${port}
-	nginx_exist_check
     v2ray_conf_add_h2
-    nginx_conf_add
-    web_camouflage
     ssl_judge_and_install
-    nginx_systemd
     vmess_qr_config_h2
     basic_information
     vmess_qr_link_image
@@ -774,16 +816,13 @@ install_nginx_1(){
     dependency_install
     basic_optimization
     domain_check
-    port_alterid_set
-    port_exist_check 80
-    port_exist_check ${port}
+    port_exist_check 443
 	nginx_exist_check
-    nginx_conf_add
+    nginx_conf_add_2
     web_camouflage
     ssl_judge_and_install
-    basic_information
-    start_process_systemd
-    enable_process_systemd
+    nginx_systemd
+    start_enable_nginx
 
 }
 update_sh(){
@@ -842,9 +881,9 @@ menu(){
     echo -e "—————————————— 安装向导 ——————————————"""
     echo -e "${Green}0.${Font}  升级 脚本"
     echo -e "${Green}1.${Font}  安装 V2Ray (Nginx+ws+tls)"
-    echo -e "${Green}2.${Font}  安装 V2Ray (Nginx+http/2+tls)"
+    echo -e "${Green}2.${Font}  安装 V2Ray (http/2+tls)"
 	echo -e "${Green}17.${Font} 安装 ssrmu"
-	echo -e "${Green}21.${Font} 安装 Nginx"
+	echo -e "${Green}21.${Font} 安装 Nginx已固定443"
     echo -e "${Green}3.${Font}  升级 V2Ray core"
     echo -e "—————————————— 配置变更 ——————————————"
     echo -e "${Green}4.${Font}  变更 UUID"
