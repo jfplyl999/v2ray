@@ -1,0 +1,14 @@
+{
+"listen": ":9090",
+"target": "127.0.0.1:47400",
+"key": "atrandys",
+"crypt": "",
+"mode": "fast2",
+"mtu": 1200,
+"sndwnd": 1024,
+"rcvwnd": 512,
+"datashard": 5,
+"parityshard": 1,
+"dscp": 0,
+"nocomp": true
+}
