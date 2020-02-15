@@ -1,0 +1,14 @@
+{
+"localaddr": ":14777",
+"remoteaddr": "127.0.0.1:9090",
+"key": "atrandys",
+"crypt": "",
+"mode": "fast2",
+"mtu": 1200,
+"sndwnd": 512,
+"rcvwnd": 1024,
+"datashard": 5,
+"parityshard": 1,
+"dscp": 0,
+"nocomp": true
+}
