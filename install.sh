@@ -1157,7 +1157,6 @@ menu(){
           install_kcp_udp
           ;;
         23)
-		  changehosts
           install_kcp_udp_client
           ;;
 		24)
