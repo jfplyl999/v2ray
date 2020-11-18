@@ -1,0 +1,24 @@
+
+- type: webfuzzsub
+  options:
+    url: https://t.me/s/baipiaojiedian
+    
+- type: webfuzz
+  options:
+    url: https://t.me/s/baipiaojiedian
+
+- type: webfuzz
+  options:
+    url: https://t.me/s/shadowsock666
+
+- type: subscribe
+  options:
+    url: https://raw.githubusercontent.com/oier-byh/freeproxy/main/all.sub
+
+- type: subscribe
+  options:
+    url: https://festive-mahavira-df48a9.netlify.com
+
+
+
+    
